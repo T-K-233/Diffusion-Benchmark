@@ -116,15 +116,13 @@ class TransformerForDiffusion(nn.Module):
         cond: Optional[torch.Tensor]=None, **kwargs):
         """
         x: (4, 8, 16)
-        timestep: (1,)
+        timestep: (4,)
         cond: (4, 4, 10)
         output: (B,T,input_dim)
         """
         # 1. time
         timesteps = timestep
 
-        # broadcast to batch dimension in a way that's compatible with ONNX/Core ML
-        timesteps = timesteps.expand(sample.shape[0])
         # (4, 1, 256)
         time_emb = self.time_emb(timesteps).unsqueeze(1)
 

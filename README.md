@@ -23,6 +23,8 @@ native (cuda:0): 5.5 s / kitr
 
 native (cpu): 10.5 s / kitr
 
+trt (cuda:0): 2.2 s / kitr
+
 
 ## 2080
 
