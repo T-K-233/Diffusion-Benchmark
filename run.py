@@ -26,7 +26,7 @@ model = TransformerForDiffusion(
 model.load_state_dict(torch.load("model.pt"))
 model.eval()
 
-model = torch.compile(model)
+# model = torch.compile(model)
 
 
 timestep = torch.tensor([0], dtype=torch.float32, device=device)
