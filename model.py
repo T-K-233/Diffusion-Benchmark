@@ -6,16 +6,14 @@ import torch.nn as nn
 
 
 class SinusoidalPosEmb(nn.Module):
-    def __init__(self, dim):
+    def __init__(self, dim, device="cuda"):
         super().__init__()
-        self.dim = dim
+        self.device = device
+        half_dim = dim // 2
+        self.emb = torch.exp(torch.arange(half_dim, device=device) * -(math.log(10000) / (half_dim - 1)))
 
     def forward(self, x):
-        device = x.device
-        half_dim = self.dim // 2
-        emb = math.log(10000) / (half_dim - 1)
-        emb = torch.exp(torch.arange(half_dim, device=device) * -emb)
-        emb = x[:, None] * emb[None, :]
+        emb = x[:, None] * self.emb[None, :]
         emb = torch.cat((emb.sin(), emb.cos()), dim=-1)
         return emb
 
@@ -50,7 +48,7 @@ class TransformerForDiffusion(nn.Module):
         self.pos_emb = nn.Parameter(torch.zeros(1, horizon, n_emb, device=device))
 
         # cond encoder
-        self.time_emb = SinusoidalPosEmb(n_emb)
+        self.time_emb = SinusoidalPosEmb(n_emb, device=device)
         
         self.cond_obs_emb = nn.Linear(cond_dim, n_emb, device=device)
         
