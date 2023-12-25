@@ -25,6 +25,10 @@ native (cpu): 10.5 s / kitr
 
 trt (cuda:0): 2.2 s / kitr
 
+trt - fp16 (cuda:0): 2.2 s / kitr
+
+trt - int8 (cuda:0): 2.2 s / kitr
+
 
 ## 2080
 

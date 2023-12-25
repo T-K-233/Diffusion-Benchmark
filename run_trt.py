@@ -33,23 +33,21 @@ np.random.seed(31193)
 torch.manual_seed(97)
 torch.cuda.manual_seed_all(97)
 torch.backends.cudnn.deterministic = True
+
 nTrainBatchSize = 128
 nHeight = 28
 nWidth = 28
 onnxFile = "./model.onnx"
 trtFile = "./model.plan"
-dataPath = os.path.dirname(os.path.realpath(__file__)) + "/../../00-MNISTData/"
-trainFileList = sorted(glob(dataPath + "train/*.jpg"))
-testFileList = sorted(glob(dataPath + "test/*.jpg"))
-inferenceImage = dataPath + "8.png"
+
+
 
 # for FP16 mode
 bUseFP16Mode = False
 # for INT8 model
-bUseINT8Mode = False
+bUseINT8Mode = True
 nCalibration = 1
 cacheFile = "./int8.cache"
-calibrationDataPath = dataPath + "test/"
 
 # os.system("rm -rf ./*.onnx ./*.plan ./*.cache")
 np.set_printoptions(precision=3, linewidth=200, suppress=True)
@@ -71,7 +69,7 @@ model = TransformerForDiffusion(
     device="cpu"
 )
 
-n_infer = 1
+n_infer = 1000
 
 timestep = torch.tensor([0.]*4, dtype=torch.float32)
 sample = torch.zeros((4, 8, 16), dtype=torch.float32)
@@ -82,16 +80,16 @@ xTest = (sample, timestep, cond)
 model.load_state_dict(torch.load("model.pt"))
 #model.eval()
 
-with torch.no_grad():
-    for i in range(n_infer):
-        y_ = model.forward(sample, timestep, cond)
+# with torch.no_grad():
+#     for i in range(n_infer):
+#         y_ = model.forward(sample, timestep, cond)
 
-    start_time = time.time()
-    for i in range(n_infer):
-        y_ = model.forward(sample, timestep, cond)
-    # 1.6s
-    print("time taken torch:", time.time() - start_time)
-    #breakpoint()
+#     start_time = time.time()
+#     for i in range(n_infer):
+#         y_ = model.forward(sample, timestep, cond)
+#     # 1.6s
+#     print("time taken torch:", time.time() - start_time)
+#     #breakpoint()
 
 
 print("Succeeded building model in pyTorch!")
@@ -107,7 +105,7 @@ torch.onnx.export(
     do_constant_folding=True, 
     verbose=True, 
     keep_initializers_as_inputs=True, 
-    opset_version=15, 
+    opset_version=17, 
     # dynamic_axes={
     #     'sample' : {0 : 'batch_size'},    # variable length axes
     #     'timestep' : {0 : 'batch_size'},
@@ -131,7 +129,7 @@ if bUseFP16Mode:
 if bUseINT8Mode:
     import calibrator
     config.set_flag(trt.BuilderFlag.INT8)
-    config.int8_calibrator = calibrator.MyCalibrator(calibrationDataPath, nCalibration, (1, 1, nHeight, nWidth), cacheFile)
+    config.int8_calibrator = calibrator.MyCalibrator(nCalibration)
 
 parser = trt.OnnxParser(network, logger)
 if not os.path.exists(onnxFile):
@@ -213,11 +211,11 @@ for i in range(n_infer):
     for i in range(nInput, nIO):
         cudart.cudaMemcpy(bufferH[i].ctypes.data, bufferD[i], bufferH[i].nbytes, cudart.cudaMemcpyKind.cudaMemcpyDeviceToHost)
 
-    for i in range(nIO):
-        print(lTensorName[i])
-        print(bufferH[i])
+    # for i in range(nIO):
+    #     print(lTensorName[i])
+    #     print(bufferH[i])
+    # print(res)
 
-    print(res)
     for b in bufferD:
         cudart.cudaFree(b)
 
