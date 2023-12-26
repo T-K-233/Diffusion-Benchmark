@@ -23,11 +23,13 @@ native (cuda:0): 5.5 s / kitr
 
 native (cpu): 10.5 s / kitr
 
+onnx (cpu): 7.7 s / kitr
+
 trt (cuda:0): 2.2 s / kitr
 
 trt - fp16 (cuda:0): 2.2 s / kitr
 
-trt - int8 (cuda:0): 2.2 s / kitr
+trt - int8 (cuda:0): 1.2 s / kitr
 
 
 ## 2080
@@ -35,4 +37,9 @@ trt - int8 (cuda:0): 2.2 s / kitr
 native (cuda:0): 4.2 s / kitr
 
 native (cpu): 4.87 s / kitr
+
+
+
+# TensorRT Convertion Flow
+
 

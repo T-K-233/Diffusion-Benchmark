@@ -112,7 +112,7 @@ class TransformerForDiffusion(nn.Module):
 
     def forward(self, 
         sample: torch.Tensor, 
-        timestep: Union[torch.Tensor, float, int], 
+        timesteps: Union[torch.Tensor, float, int], 
         cond: Optional[torch.Tensor]=None, **kwargs):
         """
         x: (4, 8, 16)
@@ -120,8 +120,6 @@ class TransformerForDiffusion(nn.Module):
         cond: (4, 4, 10)
         output: (B,T,input_dim)
         """
-        # 1. time
-        timesteps = timestep
 
         # (4, 1, 256)
         time_emb = self.time_emb(timesteps).unsqueeze(1)
