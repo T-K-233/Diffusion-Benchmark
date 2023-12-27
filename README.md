@@ -38,6 +38,11 @@ native (cuda:0): 4.2 s / kitr
 
 native (cpu): 4.87 s / kitr
 
+trt (cuda:0): 0.6 s / kitr
+
+trt - fp16 (cuda:0): 0.5 s / kitr
+
+trt - int8 (cuda:0): 0.5 s / kitr
 
 
 # TensorRT Convertion Flow
