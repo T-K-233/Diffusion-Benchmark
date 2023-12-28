@@ -17,6 +17,14 @@ for i in range(1000):
         out = model.forward()
 ```
 
+## Minimal Requirement
+
+20 diffuse steps, 30 Hz
+
+maximum
+
+(1 / 30) / 20 * 1000 = 1.66 s / kitr
+
 ## 1070
 
 native (cuda:0): 5.5 s / kitr
