@@ -38,11 +38,11 @@ maximum
 | i9 9900k         | PyTorch - compiled  | 4.1         |  12.1       |
 | Ryzen 7 1700 [3] | ONNX                | 4.4         |  11.3       |
 | GTX 1070         | ONNX                | 4.7         |  10.7       |
+| GTX TITAN X [5]  | ONNX                | 4.7         |  10.7       |
 | GTX 1070         | PyTorch - native    | 4.7         |  10.6       |
+| GTX TITAN X      | PyTorch - native    | 4.8         |  10.4       |
 | Ryzen 7 1700     | PyTorch - native    | 7.9         |   6.3       |
 | Ryzen 7 1700     | PyTorch - compiled  | 8.4         |   6.0       |
-| GTX TITAN X      | PyTorch - native    | 4.8         |  10.4       |
-| GTX TITAN X      | ONNX                | 4.7         |  10.7       |
 | GTX TITAN X      | TensorRT            | NA (unsupported) | NA     |
 
 
