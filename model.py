@@ -6,7 +6,7 @@ import torch.nn as nn
 
 
 class SinusoidalPosEmb(nn.Module):
-    def __init__(self, dim, device="cuda"):
+    def __init__(self, dim, device="cpu"):
         super().__init__()
         self.device = device
         half_dim = dim // 2

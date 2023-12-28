@@ -1,0 +1,6 @@
+PyTorch Native-CPU - Performance: 4.008 / kitr - Rate: 12.474 Hz
+PyTorch Native-GPU - Performance: 3.454 / kitr - Rate: 14.477 Hz
+PyTorch Inductor Compiled - Performance: 4.128 / kitr - Rate: 12.112 Hz
+ONNX-CPU - Performance: 2.092 / kitr - Rate: 23.898 Hz
+ONNX-GPU - Performance: 2.154 / kitr - Rate: 23.217 Hz
+TensorRT - Performance: 0.494 / kitr - Rate: 101.264 Hz
