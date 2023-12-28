@@ -32,6 +32,8 @@ maximum
 | RTX 2080 [2]     | TensorRT            | 0.5         | 101.3       |
 | GTX 1070 [4]     | TensorRT            | 1.9         |  26.0       |
 | i9 9900k [1]     | ONNX                | 2.1         |  23.9       |
+| i9-9880H         | ONNX                | 2.8         |  17.8       |
+| i9-9880H         | ONNX-int8           | 1.7         |  29.4       |
 | RTX 2080         | ONNX                | 2.2         |  23.2       |
 | RTX 2080         | PyTorch - native    | 3.5         |  14.4       |
 | i9 9900k         | PyTorch - native    | 4.0         |  12.5       |
@@ -49,11 +51,6 @@ maximum
 
 
 
-## i9 CPU with ONNX
-
-Original Model: 2.8 s / kitr
-
-Int 8 Model: 1.7 s / kitr
 
 
 [1]
