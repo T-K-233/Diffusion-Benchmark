@@ -44,6 +44,8 @@ maximum
 | Ryzen 7 1700     | PyTorch - native    | 7.9         |   6.3       |
 | Ryzen 7 1700     | PyTorch - compiled  | 8.4         |   6.0       |
 | GTX TITAN X      | TensorRT            | NA (unsupported) | NA     |
+| K510             | KPU                 | TBD         | TBD         |
+| K230             | KPU                 | TBD         | TBD         |
 
 
 
