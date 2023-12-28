@@ -5,13 +5,8 @@ import time
 import torch
 
 from model import TransformerForDiffusion
+from inference import sample, timestep, cond, device
 
-
-# inference device
-device = "cuda"
-
-torch.manual_seed(0)
-torch.set_printoptions(precision=4, sci_mode=False)
 
 # GPT with time embedding and obs cond
 model = TransformerForDiffusion(device = device)
@@ -24,11 +19,6 @@ model.eval()
 torch.save(model, "model_full.pt")
 
 # model = torch.compile(model)
-
-
-sample = torch.rand((1, 16, 12), dtype=torch.float32, device=device)
-timestep = torch.rand((1, ), dtype=torch.float32, device=device)
-cond = torch.rand((1, 8, 42), dtype=torch.float32, device=device)
 
 # (1, 16, 12)
 out = model.forward(sample, timestep, cond)
