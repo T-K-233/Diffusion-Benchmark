@@ -40,11 +40,11 @@ trt - fp16 (cuda:0): 2.2 s / kitr
 trt - int8 (cuda:0): 1.2 s / kitr
 
 
-## 2080
+## 2080 - i9 9900k
 
-native (cuda:0): 4.2 s / kitr
+native (cuda:0): 3.5 s / kitr
 
-native (cpu): 4.87 s / kitr
+native (cpu): 4.5 s / kitr
 
 trt (cuda:0): 0.6 s / kitr
 

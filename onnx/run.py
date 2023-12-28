@@ -7,6 +7,8 @@ import torch
 import onnx
 import onnxruntime
 
+from inference import sample, timestep, cond, result
+
 
 def to_numpy(tensor):
     return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
@@ -19,13 +21,6 @@ onnx_model = onnx.load("model.onnx")
 onnx.checker.check_model(onnx_model)
 
 ort_session = onnxruntime.InferenceSession("model.onnx", providers=["CUDAExecutionProvider"])
-
-
-t = 0
-sample = torch.zeros((4, 8, 16), dtype=torch.float32)
-timestep = torch.tensor([t, t, t, t], dtype=torch.float32)
-cond = torch.zeros((4, 4, 10), dtype=torch.float32)
-
 
 torch_out = torch_model.forward(sample, timestep, cond)
 
@@ -43,5 +38,6 @@ print("Time taken:", time.time() - start_time)
 
 # compare ONNX Runtime and PyTorch results
 np.testing.assert_allclose(to_numpy(torch_out), ort_outs[0], rtol=1e-03, atol=1e-05)
+np.testing.assert_allclose(to_numpy(result), ort_outs[0][0, 0], rtol=1e-03, atol=1e-05)
 
 print("Exported model has been tested with ONNXRuntime, and the result looks good!")

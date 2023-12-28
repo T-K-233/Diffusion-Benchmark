@@ -7,18 +7,17 @@ from glob import glob
 import time
 
 import numpy as np
-import tensorrt as trt
 import torch
-from torch import nn
-import torch.nn.functional as F
+import tensorrt as trt
 from cuda import cudart
-from torch.autograd import Variable
 
 from model import TransformerForDiffusion
+from inference import sample, timestep, cond, device, result
 
-np.random.seed(31193)
-torch.manual_seed(97)
-torch.cuda.manual_seed_all(97)
+
+np.random.seed(0)
+torch.manual_seed(0)
+torch.cuda.manual_seed_all(0)
 torch.backends.cudnn.deterministic = True
 
 
@@ -26,11 +25,10 @@ onnxFile = "./model.onnx"
 trtFile = "./model.plan"
 
 
-
 # for FP16 mode
 bUseFP16Mode = False
 # for INT8 model
-bUseINT8Mode = False
+bUseINT8Mode = True
 nCalibration = 1
 cacheFile = "./int8.cache"
 
@@ -40,50 +38,17 @@ cudart.cudaDeviceSynchronize()
 
 
 
-model = TransformerForDiffusion(
-    input_dim=16,
-    output_dim=16,
-    horizon=8,
-    n_obs_steps=4,
-    cond_dim=10,
-    n_layer = 6,
-    n_head = 8,
-    n_emb = 256,
-    time_as_cond=True,
-    obs_as_cond=False,
-    device="cpu"
-)
-
-n_infer = 1000
-
-timestep = torch.tensor([0.]*4, dtype=torch.float32)
-sample = torch.zeros((4, 8, 16), dtype=torch.float32)
-cond = torch.zeros((4, 4, 10), dtype=torch.float32)
-
-xTest = (sample, timestep, cond)
+model = torch.load("model_full.pt")
+n_infer = 10000
 
 model.load_state_dict(torch.load("model.pt"))
-#model.eval()
-
-# with torch.no_grad():
-#     for i in range(n_infer):
-#         y_ = model.forward(sample, timestep, cond)
-
-#     start_time = time.time()
-#     for i in range(n_infer):
-#         y_ = model.forward(sample, timestep, cond)
-#     # 1.6s
-#     print("time taken torch:", time.time() - start_time)
-#     #breakpoint()
-
 
 print("Succeeded building model in pyTorch!")
 
 # Export model as ONNX file ----------------------------------------------------
 torch.onnx.export(
     model, 
-    xTest,
-    #torch.randn(1, 1, nHeight, nWidth, device="cuda"), 
+    (sample, timestep, cond),
     onnxFile, 
     input_names=["sample", "timestep", "cond"], 
     output_names=["action"], 
@@ -91,12 +56,7 @@ torch.onnx.export(
     verbose=True, 
     keep_initializers_as_inputs=True, 
     opset_version=17, 
-    # dynamic_axes={
-    #     'sample' : {0 : 'batch_size'},    # variable length axes
-    #     'timestep' : {0 : 'batch_size'},
-    #     'cond' : {0 : 'batch_size'},
-    #     'action' : {0 : 'batch_size'}
-    # }
+    dynamic_axes={}
     )
 print("Succeeded converting model into ONNX!")
 
@@ -134,7 +94,7 @@ inputTensor_time = network.get_input(1)
 inputTensor_cond = network.get_input(2)
 opt_shape = [sample.shape[0], sample.shape[1], sample.shape[2]]
 profile.set_shape(inputTensor_sample.name, opt_shape, opt_shape, opt_shape)
-opt_shape = [4]
+opt_shape = [timestep.shape[0]]
 profile.set_shape(inputTensor_time.name, opt_shape, opt_shape, opt_shape)
 opt_shape = [cond.shape[0], cond.shape[1], cond.shape[2]]
 profile.set_shape(inputTensor_cond.name, opt_shape, opt_shape, opt_shape)
@@ -158,9 +118,7 @@ lTensorName = [engine.get_tensor_name(i) for i in range(nIO)]
 nInput = [engine.get_tensor_mode(lTensorName[i]) for i in range(nIO)].count(trt.TensorIOMode.INPUT)
 
 context = engine.create_execution_context()
-# context.set_input_shape(lTensorName[0], sample.shape)
-# context.set_input_shape(lTensorName[1], [4])
-# context.set_input_shape(lTensorName[2], cond.shape)
+
 for i in range(nIO):
     print("[%2d]%s->" % (i, "Input " if i < nInput else "Output"), engine.get_tensor_dtype(lTensorName[i]), engine.get_tensor_shape(lTensorName[i]), context.get_tensor_shape(lTensorName[i]), lTensorName[i])
 
@@ -173,6 +131,11 @@ start_time = time.time()
 # nInput: 3
 
 for i in range(n_infer):
+
+    sample = torch.rand((1, 16, 12), dtype=torch.float32, device=device)
+    timestep = torch.rand((1, ), dtype=torch.float32, device=device)
+    cond = torch.rand((1, 8, 42), dtype=torch.float32, device=device)
+
     bufferH = []
     bufferH.append(np.ascontiguousarray(sample.cpu().numpy()))
     bufferH.append(np.ascontiguousarray(timestep.cpu().numpy()))
