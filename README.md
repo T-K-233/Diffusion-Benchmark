@@ -25,6 +25,13 @@ maximum
 
 (1 / 30) / 20 * 1000 = 1.66 s / kitr
 
+## i9 CPU with ONNX
+
+Original Model: 3.7 s / kitr
+
+Int 8 Model: 2.6 s / kitr
+
+
 ## 1070
 
 native (cuda:0): 5.5 s / kitr
