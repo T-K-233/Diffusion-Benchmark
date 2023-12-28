@@ -12,11 +12,11 @@ device = "cpu"
 
 # GPT with time embedding and obs cond
 model = TransformerForDiffusion(
-    input_dim=16,
-    output_dim=16,
-    horizon=8,
-    n_obs_steps=4,
-    cond_dim=10,
+    input_dim=12,
+    output_dim=12,
+    horizon=16,
+    n_obs_steps=8,
+    cond_dim=42,
     n_layer = 6,
     n_head = 8,
     n_emb = 256,
