@@ -8,22 +8,13 @@ from model import TransformerForDiffusion
 
 
 # inference device
-device = "cpu"
+device = "cuda"
+
+torch.manual_seed(0)
+torch.set_printoptions(precision=4, sci_mode=False)
 
 # GPT with time embedding and obs cond
-model = TransformerForDiffusion(
-    input_dim=12,
-    output_dim=12,
-    horizon=16,
-    n_obs_steps=8,
-    cond_dim=42,
-    n_layer = 6,
-    n_head = 8,
-    n_emb = 256,
-    time_as_cond=True,
-    obs_as_cond=False,
-    device=device
-)
+model = TransformerForDiffusion(device = device)
 
 # torch.save(model.state_dict(), "model.pt")
 model.load_state_dict(torch.load("model.pt"))
@@ -32,21 +23,19 @@ model.load_state_dict(torch.load("model.pt"))
 model.eval()
 torch.save(model, "model_full.pt")
 
-
 # model = torch.compile(model)
 
-t = 0
-sample = torch.zeros((4, 8, 16), dtype=torch.float32, device=device)
-timestep = torch.tensor([t, t, t, t], dtype=torch.float32, device=device)
-cond = torch.zeros((4, 4, 10), dtype=torch.float32, device=device)
 
-# (4, 8, 16)
+sample = torch.rand((1, 16, 12), dtype=torch.float32, device=device)
+timestep = torch.rand((1, ), dtype=torch.float32, device=device)
+cond = torch.rand((1, 8, 42), dtype=torch.float32, device=device)
+
+# (1, 16, 12)
 out = model.forward(sample, timestep, cond)
 
 
 # print(out[0][0])
-# torch.tensor([ 0.6322, -0.0824,  0.0180,  0.4618,  0.1118, -0.0925,  0.5560, -0.4299,
-#        -0.1944,  0.4372,  0.6859,  0.0588, -0.8347,  0.8633,  0.0564, -0.1565])
+# torch.tensor([-0.3059,  0.7019,  0.3243, -1.0098, -0.6460, -0.4627, -0.7402, -0.3466,  0.2289, -0.2170,  0.8855,  0.8265])
 
 
 # warmup
