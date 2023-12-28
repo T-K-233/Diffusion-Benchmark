@@ -27,9 +27,9 @@ maximum
 
 ## i9 CPU with ONNX
 
-Original Model: 3.7 s / kitr
+Original Model: 2.8 s / kitr
 
-Int 8 Model: 2.6 s / kitr
+Int 8 Model: 1.7 s / kitr
 
 
 ## 1070
