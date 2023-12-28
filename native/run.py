@@ -2,10 +2,11 @@ import sys
 sys.path.append("../Diffusion-Benchmark/")
 import time
 
+import numpy as np
 import torch
 
 from model import TransformerForDiffusion
-from inference import sample, timestep, cond, device
+from inference import sample, timestep, cond, device, result
 
 
 # GPT with time embedding and obs cond
@@ -26,6 +27,11 @@ out = model.forward(sample, timestep, cond)
 
 # print(out[0][0])
 # torch.tensor([-0.3059,  0.7019,  0.3243, -1.0098, -0.6460, -0.4627, -0.7402, -0.3466,  0.2289, -0.2170,  0.8855,  0.8265])
+np.testing.assert_allclose(
+    out.detach().cpu().numpy()[0, 0], 
+    result.detach().cpu().numpy(), 
+    rtol=1e-03, atol=1e-05)
+
 
 
 # warmup
