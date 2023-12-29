@@ -29,6 +29,7 @@ maximum
 
 | Device           | Method              | Performance (s / kitr) | Equiv. Rate (Hz) |
 | ---------------- | ------------------- | ----------- | ----------- |
+| RTX 4090ᴬ [6]    | TensorRT            | 0.5         | 111.0       |
 | RTX 2080 [2]     | TensorRT            | 0.5         | 101.3       |
 | i9-9880H         | ONNX-int8           | 1.7         |  29.4       |
 | GTX 1070 [4]     | TensorRT            | 1.9         |  26.0       |
@@ -43,11 +44,14 @@ maximum
 | GTX TITAN X [5]  | ONNX                | 4.7         |  10.7       |
 | GTX 1070         | PyTorch - native    | 4.7         |  10.6       |
 | GTX TITAN X      | PyTorch - native    | 4.8         |  10.4       |
+| RTX 4090ᴬ        | PyTorch - native    | 5.2         |   9.6       |
+| RTX 4090ᴬ        | ONNX                | 5.5         |   9.1       |
 | Ryzen 7 1700     | PyTorch - native    | 7.9         |   6.3       |
 | Ryzen 7 1700     | PyTorch - compiled  | 8.4         |   6.0       |
 | GTX TITAN X      | TensorRT            | NA (unsupported) | NA     |
 | K510             | KPU                 | TBD         | TBD         |
 | K230             | KPU                 | TBD         | TBD         |
+
 
 
 
