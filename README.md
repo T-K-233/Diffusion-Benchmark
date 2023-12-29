@@ -29,7 +29,8 @@ maximum
 
 | Device           | Method              | Performance (s / kitr) | Equiv. Rate (Hz) |
 | ---------------- | ------------------- | ----------- | ----------- |
-| RTX 4090ᴬ [6]    | TensorRT            | 0.5         | 111.0       |
+| RTX 4090ᴮ [6]    | TensorRT            | 0.4         | 129.0       |
+| RTX 4090ᴬ        | TensorRT            | 0.5         | 111.0       |
 | RTX 2080 [2]     | TensorRT            | 0.5         | 101.3       |
 | i9-9880H         | ONNX-int8           | 1.7         |  29.4       |
 | GTX 1070 [4]     | TensorRT            | 1.9         |  26.0       |
@@ -37,6 +38,7 @@ maximum
 | RTX 2080         | ONNX                | 2.2         |  23.2       |
 | i9-9880H         | ONNX                | 2.8         |  17.8       |
 | RTX 2080         | PyTorch - native    | 3.5         |  14.4       |
+| RTX 4090ᴮ        | PyTorch - native    | 0.4         |  13.8       |
 | i9 9900k         | PyTorch - native    | 4.0         |  12.5       |
 | i9 9900k         | PyTorch - compiled  | 4.1         |  12.1       |
 | Ryzen 7 1700 [3] | ONNX                | 4.4         |  11.3       |
@@ -45,10 +47,11 @@ maximum
 | GTX 1070         | PyTorch - native    | 4.7         |  10.6       |
 | GTX TITAN X      | PyTorch - native    | 4.8         |  10.4       |
 | RTX 4090ᴬ        | PyTorch - native    | 5.2         |   9.6       |
-| RTX 4090ᴬ        | ONNX                | 5.5         |   9.1       |
 | Ryzen 7 1700     | PyTorch - native    | 7.9         |   6.3       |
 | Ryzen 7 1700     | PyTorch - compiled  | 8.4         |   6.0       |
 | GTX TITAN X      | TensorRT            | NA (unsupported) | NA     |
+| RTX 4090ᴬ        | ONNX                | NA (unsupported) | NA     |
+| RTX 4090ᴮ        | ONNX                | NA (unsupported) | NA     |
 | K510             | KPU                 | TBD         | TBD         |
 | K230             | KPU                 | TBD         | TBD         |
 
@@ -822,3 +825,231 @@ GPU 00000000:27:00.0
             Used GPU Memory               : 62 MiB
 
 ```
+
+[6]
+
+```yaml
+GPU 00000000:01:00.0
+    Product Name                          : NVIDIA GeForce RTX 4090
+    Product Brand                         : GeForce
+    Product Architecture                  : Ada Lovelace
+    Display Mode                          : Enabled
+    Display Active                        : Enabled
+    Persistence Mode                      : Disabled
+    Addressing Mode                       : None
+    MIG Mode
+        Current                           : N/A
+        Pending                           : N/A
+    Accounting Mode                       : Disabled
+    Accounting Mode Buffer Size           : 4000
+    Driver Model
+        Current                           : N/A
+        Pending                           : N/A
+    Serial Number                         : 1322823110528
+    GPU UUID                              : GPU-b9029ae5-75ac-6ded-3592-fc695a3f8c1a
+    Minor Number                          : 0
+    VBIOS Version                         : 95.02.47.00.01
+    MultiGPU Board                        : No
+    Board ID                              : 0x100
+    Board Part Number                     : 900-1G136-2530-000
+    GPU Part Number                       : 2684-301-A1
+    FRU Part Number                       : N/A
+    Module ID                             : 1
+    Inforom Version
+        Image Version                     : G002.0000.00.03
+        OEM Object                        : 2.0
+        ECC Object                        : 6.16
+        Power Management Object           : N/A
+    Inforom BBX Object Flush
+        Latest Timestamp                  : N/A
+        Latest Duration                   : N/A
+    GPU Operation Mode
+        Current                           : N/A
+        Pending                           : N/A
+    GSP Firmware Version                  : N/A
+    GPU Virtualization Mode
+        Virtualization Mode               : None
+        Host VGPU Mode                    : N/A
+    GPU Reset Status
+        Reset Required                    : No
+        Drain and Reset Recommended       : N/A
+    IBMNPU
+        Relaxed Ordering Mode             : N/A
+    PCI
+        Bus                               : 0x01
+        Device                            : 0x00
+        Domain                            : 0x0000
+        Device Id                         : 0x268410DE
+        Bus Id                            : 00000000:01:00.0
+        Sub System Id                     : 0x16F410DE
+        GPU Link Info
+            PCIe Generation
+                Max                       : 3
+                Current                   : 1
+                Device Current            : 1
+                Device Max                : 4
+                Host Max                  : 3
+            Link Width
+                Max                       : 16x
+                Current                   : 16x
+        Bridge Chip
+            Type                          : N/A
+            Firmware                      : N/A
+        Replays Since Reset               : 0
+        Replay Number Rollovers           : 0
+        Tx Throughput                     : 1000 KB/s
+        Rx Throughput                     : 2000 KB/s
+        Atomic Caps Inbound               : N/A
+        Atomic Caps Outbound              : N/A
+    Fan Speed                             : 0 %
+    Performance State                     : P8
+    Clocks Event Reasons
+        Idle                              : Active
+        Applications Clocks Setting       : Not Active
+        SW Power Cap                      : Not Active
+        HW Slowdown                       : Not Active
+            HW Thermal Slowdown           : Not Active
+            HW Power Brake Slowdown       : Not Active
+        Sync Boost                        : Not Active
+        SW Thermal Slowdown               : Not Active
+        Display Clock Setting             : Not Active
+    FB Memory Usage
+        Total                             : 24564 MiB
+        Reserved                          : 354 MiB
+        Used                              : 609 MiB
+        Free                              : 23599 MiB
+    BAR1 Memory Usage
+        Total                             : 256 MiB
+        Used                              : 18 MiB
+        Free                              : 238 MiB
+    Conf Compute Protected Memory Usage
+        Total                             : 0 MiB
+        Used                              : 0 MiB
+        Free                              : 0 MiB
+    Compute Mode                          : Default
+    Utilization
+        Gpu                               : 34 %
+        Memory                            : 5 %
+        Encoder                           : 0 %
+        Decoder                           : 0 %
+        JPEG                              : 0 %
+        OFA                               : 0 %
+    Encoder Stats
+        Active Sessions                   : 0
+        Average FPS                       : 0
+        Average Latency                   : 0
+    FBC Stats
+        Active Sessions                   : 0
+        Average FPS                       : 0
+        Average Latency                   : 0
+    ECC Mode
+        Current                           : Disabled
+        Pending                           : Disabled
+    ECC Errors
+        Volatile
+            SRAM Correctable              : N/A
+            SRAM Uncorrectable            : N/A
+            DRAM Correctable              : N/A
+            DRAM Uncorrectable            : N/A
+        Aggregate
+            SRAM Correctable              : N/A
+            SRAM Uncorrectable            : N/A
+            DRAM Correctable              : N/A
+            DRAM Uncorrectable            : N/A
+    Retired Pages
+        Single Bit ECC                    : N/A
+        Double Bit ECC                    : N/A
+        Pending Page Blacklist            : N/A
+    Remapped Rows
+        Correctable Error                 : 0
+        Uncorrectable Error               : 0
+        Pending                           : No
+        Remapping Failure Occurred        : No
+        Bank Remap Availability Histogram
+            Max                           : 192 bank(s)
+            High                          : 0 bank(s)
+            Partial                       : 0 bank(s)
+            Low                           : 0 bank(s)
+            None                          : 0 bank(s)
+    Temperature
+        GPU Current Temp                  : 40 C
+        GPU T.Limit Temp                  : 42 C
+        GPU Shutdown T.Limit Temp         : -7 C
+        GPU Slowdown T.Limit Temp         : -2 C
+        GPU Max Operating T.Limit Temp    : 0 C
+        GPU Target Temperature            : 83 C
+        Memory Current Temp               : N/A
+        Memory Max Operating T.Limit Temp : N/A
+    GPU Power Readings
+        Power Draw                        : 27.98 W
+        Current Power Limit               : 450.00 W
+        Requested Power Limit             : 450.00 W
+        Default Power Limit               : 450.00 W
+        Min Power Limit                   : 150.00 W
+        Max Power Limit                   : 600.00 W
+    Module Power Readings
+        Power Draw                        : N/A
+        Current Power Limit               : N/A
+        Requested Power Limit             : N/A
+        Default Power Limit               : N/A
+        Min Power Limit                   : N/A
+        Max Power Limit                   : N/A
+    Clocks
+        Graphics                          : 210 MHz
+        SM                                : 210 MHz
+        Memory                            : 405 MHz
+        Video                             : 1185 MHz
+    Applications Clocks
+        Graphics                          : N/A
+        Memory                            : N/A
+    Default Applications Clocks
+        Graphics                          : N/A
+        Memory                            : N/A
+    Deferred Clocks
+        Memory                            : N/A
+    Max Clocks
+        Graphics                          : 3105 MHz
+        SM                                : 3105 MHz
+        Memory                            : 10501 MHz
+        Video                             : 2415 MHz
+    Max Customer Boost Clocks
+        Graphics                          : N/A
+    Clock Policy
+        Auto Boost                        : N/A
+        Auto Boost Default                : N/A
+    Voltage
+        Graphics                          : 880.000 mV
+    Fabric
+        State                             : N/A
+        Status                            : N/A
+    Processes
+        GPU instance ID                   : N/A
+        Compute instance ID               : N/A
+        Process ID                        : 1180
+            Type                          : G
+            Name                          : /usr/lib/xorg/Xorg
+            Used GPU Memory               : 290 MiB
+        GPU instance ID                   : N/A
+        Compute instance ID               : N/A
+        Process ID                        : 1424
+            Type                          : G
+            Name                          : /usr/bin/gnome-shell
+            Used GPU Memory               : 110 MiB
+        GPU instance ID                   : N/A
+        Compute instance ID               : N/A
+        Process ID                        : 3132
+            Type                          : G
+            Name                          : /snap/code/148/usr/share/code/code --type=gpu-process --disable-gpu-sandbox --no-sandbox --crashpad-handler-pid=3120 --enable-crash-reporter=190d6433-28c7-4cb5-a6a1-734946c14792,no_channel --user-data-dir=/home/tk/.config/Code --gpu-preferences=WAAAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAABgAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAGAAAAAAAAAAYAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=0,i,7423938499341143706,8433235596509887907,262144 --disable-features=CalculateNativeWinOcclusion,SpareRendererForSitePerProcess
+            Used GPU Memory               : 64 MiB
+        GPU instance ID                   : N/A
+        Compute instance ID               : N/A
+        Process ID                        : 12636
+            Type                          : C+G
+            Name                          : /opt/google/chrome/chrome --type=gpu-process --crashpad-handler-pid=12599 --enable-crash-reporter=a42798d1-0130-45ce-ad3e-7ca1280ba517, --change-stack-guard-on-fork=enable --gpu-preferences=WAAAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAABgAAEAAAA4AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAGAAAAAAAAAAYAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=0,i,8737357031540353906,16675022826240328171,262144 --variations-seed-version=20231218-080113.411000
+            Used GPU Memory               : 60 MiB
+
+```
+
+
+ᴬ: on Ryzen 1700 X
+ᴮ: on Intel i9 9900K
