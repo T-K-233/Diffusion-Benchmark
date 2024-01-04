@@ -38,7 +38,7 @@ maximum
 | RTX 2080         | ONNX                | 2.2         |  23.2       |
 | i9-9880H         | ONNX                | 2.8         |  17.8       |
 | RTX 2080         | PyTorch - native    | 3.5         |  14.4       |
-| RTX 4090ᴮ        | PyTorch - native    | 0.4         |  13.8       |
+| RTX 4090ᴮ        | PyTorch - native    | 3.6         |  13.8       |
 | i9 9900k         | PyTorch - native    | 4.0         |  12.5       |
 | i9 9900k         | PyTorch - compiled  | 4.1         |  12.1       |
 | Ryzen 7 1700 [3] | ONNX                | 4.4         |  11.3       |
